@@ -447,9 +447,9 @@ void CCmd::ChatCmd(CNetMsg_Cl_Say *Msg)
 	{
 		LastChat();
 		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "----- Shop -----");
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/range [10 score] - Buy range zombie hammer");
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/heart [20 score] - Buy 1 heart if you zombie team");
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/jump [3 score] - Buy 1 other jump");
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/range [10 score] - Alcance de martillo de zombie");
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/heart [20 score] - Corazón de zombie");
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/jump [3 score] - Salto adicional");
 		return;
 	}
 	else if (!strcmp(Msg->m_pMessage, "/news"))
@@ -497,12 +497,12 @@ void CCmd::ChatCmd(CNetMsg_Cl_Say *Msg)
 	{
 		LastChat();
 		if (!m_pPlayer->m_AccData.m_UserID) return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "No has iniciado sesión, haz '/account' para más información");
-		if (!GameServer()->GetPlayerChar(m_pPlayer->GetCID())) return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Use only if you alive!");
-		if (GameServer()->m_World.m_Paused) return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Please wait end round!");
-		if(m_pPlayer->GetTeam() != TEAM_RED) return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Available only zombies!");
-		if (m_pPlayer->m_Score < 20) return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Need 20 score!");
+		if (!GameServer()->GetPlayerChar(m_pPlayer->GetCID())) return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "¡No puedes hacer esto muerto!");
+		if (GameServer()->m_World.m_Paused) return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "¡No ha terminado la ronda!");
+		if(m_pPlayer->GetTeam() != TEAM_RED) return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "¡Solo para zombies!");
+		if (m_pPlayer->m_Score < 20) return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "¡Necesitas 20 score!");
 
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Done!");
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "¡Hecho!");
 		m_pPlayer->m_Score -= 20;
 		m_pPlayer->m_ActivesLife = false;
 		m_pPlayer->m_LifeActives = false;
@@ -513,11 +513,11 @@ void CCmd::ChatCmd(CNetMsg_Cl_Say *Msg)
 	{
 		LastChat();
 		if (!m_pPlayer->m_AccData.m_UserID) return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "No has iniciado sesión, haz '/account' para más información");
-		if (!GameServer()->GetPlayerChar(m_pPlayer->GetCID())) return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Use only if you alive!");
-		if (GameServer()->m_World.m_Paused) return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Please wait end round!");
-		if (m_pPlayer->m_Score < 3) return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Need 3 score!");
+		if (!GameServer()->GetPlayerChar(m_pPlayer->GetCID())) return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "¡No puedes hacer esto muerto!");
+		if (GameServer()->m_World.m_Paused) return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "¡No ha terminado la ronda!");
+		if (m_pPlayer->m_Score < 3) return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "¡Necesitas 3 score!");
 
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Done!");
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "¡Hecho!");
 		m_pPlayer->m_JumpsShop++;
 		m_pPlayer->m_Score -= 3;
 		GameServer()->GetPlayerChar(m_pPlayer->GetCID())->m_Core.m_Jumps += 1;
@@ -528,10 +528,10 @@ void CCmd::ChatCmd(CNetMsg_Cl_Say *Msg)
 		LastChat();
 		if (!m_pPlayer->m_AccData.m_UserID) return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "No has iniciado sesión, haz '/account' para más información");
 
-		if (!GameServer()->GetPlayerChar(m_pPlayer->GetCID())) return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Use only if you alive!");
-		if (GameServer()->m_World.m_Paused) return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Please wait end round!");
-		if (m_pPlayer->GetTeam() != TEAM_RED) return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Available only zombies!");
-		if (m_pPlayer->m_Score < 10) return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Need 10 score!");
+		if (!GameServer()->GetPlayerChar(m_pPlayer->GetCID())) return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "¡No puedes hacer esto muerto!");
+		if (GameServer()->m_World.m_Paused) return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "¡No ha terminado la ronda!");
+		if (m_pPlayer->GetTeam() != TEAM_RED) return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "¡Solo para zombies!");
+		if (m_pPlayer->m_Score < 10) return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "¡Necesitas 10 score!");
 
 		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Done!");
 		m_pPlayer->m_RangeShop = true;
