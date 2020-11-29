@@ -659,6 +659,7 @@ void CCharacter::TickPaused()
 
 void CCharacter::ExperienceAdd(int Exp, int ClientID)
 {
+	Exp *= 2;
 	CPlayer* pPlayer = GameServer()->m_apPlayers[ClientID];
 	if(m_pPlayer) pPlayer->m_AccData.m_Exp += m_pPlayer->m_AccData.m_Freeze?0:Exp;
 	else pPlayer->m_AccData.m_Exp += Exp;
