@@ -781,7 +781,7 @@ bool CCharacter::TakeDamage(vec2 Force, int Dmg, int From, int Weapon)
 			if(GameServer()->m_apPlayers[From]->m_KillingSpree == g_Config.m_SvKillingSpree)
 			{
 				char aBuf[48];
-				str_format(aBuf, sizeof(aBuf), "%s is on killing spree!", Server()->ClientName(From));
+				str_format(aBuf, sizeof(aBuf), "%s está haciendo una masacre!", Server()->ClientName(From));
 				GameServer()->SendChatTarget(-1, aBuf);
 			}
 		}
@@ -797,7 +797,7 @@ bool CCharacter::TakeDamage(vec2 Force, int Dmg, int From, int Weapon)
 	m_EmoteStop = Server()->Tick() + 500 * Server()->TickSpeed() / 1000;
 
 	char aBuf[32];
-	str_format(aBuf, sizeof(aBuf), "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHealth: %d", m_Health);
+	str_format(aBuf, sizeof(aBuf), "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nVida: %d", m_Health);
 	GameServer()->SendBroadcast(aBuf, m_pPlayer->GetCID());
 	return true;
 }

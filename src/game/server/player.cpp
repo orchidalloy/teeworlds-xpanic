@@ -113,7 +113,7 @@ void CPlayer::Tick()
 				m_pAccount->Apply();
 
 			char SendLVL[64];
-			str_format(SendLVL, sizeof(SendLVL), "Successfully! Your new level %d\n/ Upgrade counts %d", m_AccData.m_Level, m_AccData.m_Money);
+			str_format(SendLVL, sizeof(SendLVL), "¡Subiste al nivel %d!\n/ Mejoras: %d", m_AccData.m_Level, m_AccData.m_Money);
 			GameServer()->SendChatTarget(m_ClientID, SendLVL);
 		}
 	}
@@ -304,20 +304,20 @@ void CPlayer::OnDisconnect(const char *pReason)
 		&& GameServer()->m_pController->ZombStarted() && !GameServer()->m_pController->m_Warmup)
 	{
 		char aBuf[128], aAddrStr[NETADDR_MAXSTRSIZE] = {0};
-		str_format(aBuf, sizeof(aBuf), "'%s' has left the game (banned 5 minutes last zombie)", Server()->ClientName(m_ClientID));
+		str_format(aBuf, sizeof(aBuf), "'%s' ha salido del juego (ban de 5 minutos por ser último zombie)", Server()->ClientName(m_ClientID));
 		GameServer()->SendChat(-1, CGameContext::CHAT_ALL, aBuf);
 		
 		Server()->GetClientAddr(m_ClientID, aAddrStr, sizeof(aAddrStr));
-		str_format(aBuf, sizeof(aBuf), "ban %s 5 You were last zombie", aAddrStr);
+		str_format(aBuf, sizeof(aBuf), "ban %s 5 Fuiste el último zombie", aAddrStr);
 		GameServer()->Console()->ExecuteLine(aBuf);
 	}
 	else if(Server()->ClientIngame(m_ClientID))
 	{
 		char aBuf[96];
 		if(pReason && *pReason)
-			str_format(aBuf, sizeof(aBuf), "'%s' has left the game (%s)", Server()->ClientName(m_ClientID), pReason);
+			str_format(aBuf, sizeof(aBuf), "'%s' ha salido del juego (%s)", Server()->ClientName(m_ClientID), pReason);
 		else
-			str_format(aBuf, sizeof(aBuf), "'%s' has left the game", Server()->ClientName(m_ClientID));
+			str_format(aBuf, sizeof(aBuf), "'%s' ha salido del juego", Server()->ClientName(m_ClientID));
 		GameServer()->SendChat(-1, CGameContext::CHAT_ALL, aBuf);
 
 		str_format(aBuf, sizeof(aBuf), "leave player='%d:%s'", m_ClientID, Server()->ClientName(m_ClientID));
@@ -409,27 +409,27 @@ void CPlayer::SetTeam(int Team, bool DoChatMsg)
 		return;
 
 	if (!m_AccData.m_UserID)
-		return GameServer()->SendBroadcast("To start the game read /help.", m_ClientID);
+		return GameServer()->SendBroadcast("Para iniciar el juego escribe /help.", m_ClientID);
 
 	if (m_Team == TEAM_RED && Team != TEAM_SPECTATORS) 
-		return GameServer()->SendBroadcast("Zombies can't change team.", m_ClientID);
+		return GameServer()->SendBroadcast("Los Zombies no pueden cambiar de equipo.", m_ClientID);
 
 	if (GameServer()->m_pController->ZombStarted() && !GameServer()->m_pController->m_Warmup && Team == TEAM_BLUE)
-		return GameServer()->SendBroadcast("You only can join the human team when round hasn't started.", m_ClientID);
+		return GameServer()->SendBroadcast("Ya no puedes unirte a los Humanos.", m_ClientID);
 	
 	if (Team == TEAM_RED && ((GameServer()->m_pController->ZombStarted() && GameServer()->m_pController->m_Warmup) || !GameServer()->m_pController->ZombStarted()))
-		return GameServer()->SendBroadcast("Zombie will be chosen randomly.", m_ClientID);
+		return GameServer()->SendBroadcast("Zombies serán escogidos al azar.", m_ClientID);
 
 	if (m_Team == TEAM_BLUE && GameServer()->m_pController->ZombStarted())
-		return GameServer()->SendBroadcast("You can't join the zombie team.", m_ClientID);
+		return GameServer()->SendBroadcast("No puedes unirte a los Zombies.", m_ClientID);
 	
 	if (m_Team == TEAM_RED && GameServer()->m_pController->NumZombs() < 2 && GameServer()->m_pController->ZombStarted())
-		return GameServer()->SendBroadcast("You are the only zombie.", m_ClientID);
+		return GameServer()->SendBroadcast("Eres el único Zombie.", m_ClientID);
 
 	char aBuf[64];
 	if(DoChatMsg)
 	{
-		str_format(aBuf, sizeof(aBuf), "'%s' joined the %s", Server()->ClientName(m_ClientID), GameServer()->m_pController->GetTeamName(Team));
+		str_format(aBuf, sizeof(aBuf), "'%s' se unió al equipo %s", Server()->ClientName(m_ClientID), GameServer()->m_pController->GetTeamName(Team));
 		GameServer()->SendChat(-1, CGameContext::CHAT_ALL, aBuf);
 	}
 
@@ -501,7 +501,7 @@ bool CPlayer::AfkTimer(int NewTargetX, int NewTargetY)
 		{
 			sprintf(
 				m_pAfkMsg,
-				"You have been afk for %d seconds now. Please note that you get kicked after not playing for %d seconds.",
+				"Has estado AFK por %d segundos. Serás kickeado a los %d segundos.",
 				(int)(g_Config.m_SvMaxAfkTime*0.5),
 				g_Config.m_SvMaxAfkTime
 			);
@@ -512,7 +512,7 @@ bool CPlayer::AfkTimer(int NewTargetX, int NewTargetY)
 		{
 			sprintf(
 				m_pAfkMsg,
-				"You have been afk for %d seconds now. Please note that you get kicked after not playing for %d seconds.",
+				"Has estado AFK por %d segundos. Serás kickeado a los %d segundos.",
 				(int)(g_Config.m_SvMaxAfkTime*0.9),
 				g_Config.m_SvMaxAfkTime
 			);
@@ -522,7 +522,7 @@ bool CPlayer::AfkTimer(int NewTargetX, int NewTargetY)
 		else if(m_LastPlaytime < time_get()-time_freq()*g_Config.m_SvMaxAfkTime)
 		{
 			CServer* serv =	(CServer*)m_pGameServer->Server();
-			serv->Kick(m_ClientID,"Away from keyboard");
+			serv->Kick(m_ClientID,"AFK");
 			return true;
 		}
 	}
@@ -575,7 +575,7 @@ void CPlayer::SetZomb(int From)
 		if (From == -1)
 		{
 			char aBuf[52];			
-			str_format(aBuf, sizeof(aBuf), "'%s' wants your brain! Run away.", Server()->ClientName(m_ClientID));
+			str_format(aBuf, sizeof(aBuf), "¡'%s' quiere comerte el cerebro, corre!", Server()->ClientName(m_ClientID));
 			GameServer()->SendChat(-1, CGameContext::CHAT_ALL, aBuf);
 		}
 		m_LifeActives = false;
@@ -585,7 +585,7 @@ void CPlayer::SetZomb(int From)
 	m_pCharacter->SetZomb();
 	GameServer()->m_pController->OnPlayerInfoChange(GameServer()->m_apPlayers[m_ClientID]);
 	GameServer()->m_pController->CheckZomb();
-	GameServer()->SendChatTarget(m_ClientID, "You are now a zombie! Eat some brains.");
+	GameServer()->SendChatTarget(m_ClientID, "¡Eres un Zombie! Ve a comer cerebros.");
 }
 
 void CPlayer::ResetZomb()

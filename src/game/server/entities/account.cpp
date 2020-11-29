@@ -160,14 +160,14 @@ void CAccount::Register(char *Username, char *Password)
 
 	Login(Username, Password);
 	
-	GameServer()->SendChatTarget(m_pPlayer->GetCID(), "~~~~~~~~ ! Registered ! ~~~~~~~~");
-	str_format(aBuf, sizeof(aBuf), "Login: %s", Username);
+	GameServer()->SendChatTarget(m_pPlayer->GetCID(), "~~~~~~~~~ ¡Registrado! ~~~~~~~~~");
+	str_format(aBuf, sizeof(aBuf), "Usuario: %s", Username);
 	GameServer()->SendChatTarget(m_pPlayer->GetCID(), aBuf);
-	str_format(aBuf, sizeof(aBuf), "Password: %s", Password);
+	str_format(aBuf, sizeof(aBuf), "Contraseña: %s", Password);
 	GameServer()->SendChatTarget(m_pPlayer->GetCID(), aBuf);
-	str_format(aBuf, sizeof(aBuf), "Now use the /login %s %s", Username, Password);
+	str_format(aBuf, sizeof(aBuf), "Ahora haz /login %s %s", Username, Password);
 	GameServer()->SendChatTarget(m_pPlayer->GetCID(), aBuf);
-	GameServer()->SendChatTarget(m_pPlayer->GetCID(), "~~~~~~~~ ! Registered ! ~~~~~~~~");
+	GameServer()->SendChatTarget(m_pPlayer->GetCID(), "~~~~~~~~~ ¡Registrado! ~~~~~~~~~");
 }
 
 bool CAccount::Exists(const char *Username)
@@ -242,7 +242,7 @@ void CAccount::NewPassword(char *NewPassword)
 	if(str_length(NewPassword) > 12 || str_length(NewPassword) < 4)
 	{
 		char aBuf[48];
-		str_format(aBuf, sizeof(aBuf), "Password too %s!", str_length(NewPassword)<4?"long":"short");
+		str_format(aBuf, sizeof(aBuf), "Contraseña muy %s!", str_length(NewPassword)<4?"larga":"corta");
 		GameServer()->SendChatTarget(m_pPlayer->GetCID(), aBuf);
 		return;
     }
@@ -251,7 +251,7 @@ void CAccount::NewPassword(char *NewPassword)
 	char *p = strpbrk(NewPassword, Filter);
 	if(!p)
 	{
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Don't use valid chars for password!");
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "¡Sólo puedes usar caracteres válidos!");
 		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "A - Z, a - z, 0 - 9, . - _");
 		return;
 	}
@@ -260,7 +260,7 @@ void CAccount::NewPassword(char *NewPassword)
 	Apply();
 	
 	dbg_msg("account", "Password changed - ('%s')", m_pPlayer->m_AccData.m_Username);
-	GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Password successfully changed!");
+	GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Contraseña cambiada");
 }
 
 
