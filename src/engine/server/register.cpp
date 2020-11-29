@@ -202,7 +202,7 @@ void CRegister::RegisterUpdate(int Nettype)
 			RegisterSendHeartbeat(m_aMasterserverInfo[m_RegisterRegisteredServer].m_Addr);
 		}
 
-		if(Now > m_RegisterStateStart+Freq*60)
+		if(Now > m_RegisterStateStart+Freq*600)
 		{
 			m_pConsole->Print(IConsole::OUTPUT_LEVEL_STANDARD, "register", "WARNING: Master server is not responding, switching master");
 			RegisterNewState(REGISTERSTATE_START);
