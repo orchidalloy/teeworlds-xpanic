@@ -781,7 +781,7 @@ bool CCharacter::TakeDamage(vec2 Force, int Dmg, int From, int Weapon)
 			if(GameServer()->m_apPlayers[From]->m_KillingSpree == g_Config.m_SvKillingSpree)
 			{
 				char aBuf[48];
-				str_format(aBuf, sizeof(aBuf), "%s está haciendo una masacre!", Server()->ClientName(From));
+				str_format(aBuf, sizeof(aBuf), "¡%s está haciendo una masacre!", Server()->ClientName(From));
 				GameServer()->SendChatTarget(-1, aBuf);
 			}
 		}
@@ -1112,7 +1112,7 @@ void CCharacter::HandleTiles(int Index)
 	// unlimited air jumps
 	if(((m_TileIndex == TILE_SUPER_START) || (m_TileFIndex == TILE_SUPER_START)) && !m_SuperJump)
 	{
-		GameServer()->SendChatTarget(GetPlayer()->GetCID(),"You have unlimited air jumps");
+		GameServer()->SendChatTarget(GetPlayer()->GetCID(),"Tienes saltos infinitos");
 		m_SuperJump = true;
 		if (m_Core.m_Jumps == 0)
 		{
@@ -1122,7 +1122,7 @@ void CCharacter::HandleTiles(int Index)
 	}
 	else if(((m_TileIndex == TILE_SUPER_END) || (m_TileFIndex == TILE_SUPER_END)) && m_SuperJump)
 	{
-		GameServer()->SendChatTarget(GetPlayer()->GetCID(), "You don't have unlimited air jumps");
+		GameServer()->SendChatTarget(GetPlayer()->GetCID(), "No tienes saltos infinitos");
 		m_SuperJump = false;
 		if (m_Core.m_Jumps == 0)
 		{

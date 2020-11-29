@@ -88,12 +88,12 @@ void CCmd::ChatCmd(CNetMsg_Cl_Say *Msg)
 	else if (!strncmp(Msg->m_pMessage, "/upgr", 5))
 	{
 		LastChat();
-		if (!m_pPlayer->m_AccData.m_UserID) return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "¡No has iniciado sesión! Usar '/account' para más información");
+		if (!m_pPlayer->m_AccData.m_UserID) return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "¡No has iniciado sesión! Haz '/account' para más información");
 
 		char supgr[256], andg[64];
 		if (sscanf(Msg->m_pMessage, "/upgr %s", supgr) != 1)
 		{
-			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/upgr <Tipo>"), GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Tipos: daño, vida, control, ammo, regenammo, stats");
+			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/upgr <Tipo>"), GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Tipos: ataque, vida, control, ammo, regenammo, stats");
 			return;
 		}
 		if (!strcmp(supgr, "control"))
@@ -109,7 +109,7 @@ void CCmd::ChatCmd(CNetMsg_Cl_Say *Msg)
 			m_pPlayer->m_pAccount->Apply();
 			return;
 		}
-		else if (!strcmp(supgr, "daño"))
+		else if (!strcmp(supgr, "ataque"))
 		{
 			if (m_pPlayer->m_AccData.m_Dmg >= 21)
 				return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "¡Nivel máximo alcanzado!");
@@ -117,7 +117,7 @@ void CCmd::ChatCmd(CNetMsg_Cl_Say *Msg)
 				return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "¡No tienes dinero!");
 
 			m_pPlayer->m_AccData.m_Money--, m_pPlayer->m_AccData.m_Dmg++;
-			str_format(andg, sizeof(andg), "Nuevo nivel de Daño: %d, Dinero: %d", m_pPlayer->m_AccData.m_Dmg, m_pPlayer->m_AccData.m_Money);
+			str_format(andg, sizeof(andg), "Nuevo nivel de Ataque: %d, Dinero: %d", m_pPlayer->m_AccData.m_Dmg, m_pPlayer->m_AccData.m_Money);
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), andg);
 			m_pPlayer->m_pAccount->Apply();
 			return;
@@ -185,55 +185,55 @@ void CCmd::ChatCmd(CNetMsg_Cl_Say *Msg)
 	else if(!strncmp(Msg->m_pMessage, "/turret", 7))
 	{
 		LastChat();
-		if(!m_pPlayer->m_AccData.m_UserID) return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "No has iniciado sesión, escribe '/account' para más información");
+		if(!m_pPlayer->m_AccData.m_UserID) return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "No has iniciado sesión, haz '/account' para más información");
 
 		char supgr[256], andg[64];
 		if (sscanf(Msg->m_pMessage, "/turret %s", supgr) != 1)
-			return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Use /turret info");
+			return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Haz /turret info");
 
 		if(!strcmp(supgr, "info"))
 		{		
-			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/turret info - show information");
-			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/turret help - show help");
-			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/turret stats - view stats upgrade turrets");
-			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/turret speed - upgrade turret speed (1 turret money)");
-			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/turret dmg - upgrade turret damage (1 turret money)");
-			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/turret ammo - upgrade turret ammo (1 turret money)");
-			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/turret ammoregen - upgrade turret ammo (1 turret money)");
-			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/turret range - upgrade turret range (1 turret money)");
+			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/turret info - Información");
+			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/turret help - Ayuda");
+			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/turret stats - Características");
+			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/turret velocidad - Mejorar velocidad (1 dinero)");
+			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/turret ataque - Mejorar ataque (1 dinero)");
+			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/turret ammo - Mejorar ammo (1 dinero)");
+			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/turret regenammo - Mejorar ammo (1 dinero)");
+			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/turret alcance - Mejorar alcance (1 dinero)");
 			return;
 		}			
 		else if(!strcmp(supgr, "help"))
 		{
-			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Turret could be placed via Ghost Emoticon");
-			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Turrets can have 3 different weapons");
-			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Gun Turret: Shoots once per sec at enemy");
-			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Shotgun Turret: Shoots once per 3 sec at enemy");
-			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Laser Turret: places a laser each 40 sec if the zombie reach it's line");
+			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "La Torreta se pone con el emote de Fantasma");
+			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "La Torreta puede tener 3 tipos de arma");
+			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Pistola: 1 disparo por segundo");
+			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Escopeta: 1 disparo cada 3 segundos");
+			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Laser: Pone un laser cada 40 segundos");
 			return;
 		}
-		else if(!strcmp(supgr, "dmg"))
+		else if(!strcmp(supgr, "ataque"))
 		{
 			if(m_pPlayer->m_AccData.m_TurretDmg > 100)
-				return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Maximal turret damage level!");		
+				return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "¡Nivel máximo alcanzado!");		
 			if(m_pPlayer->m_AccData.m_TurretMoney <= 0)
-				return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "You have not turret money counts!");
+				return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "¡No tienes dinero de torreta!");
 			
 			m_pPlayer->m_AccData.m_TurretMoney--, m_pPlayer->m_AccData.m_TurretDmg++;
-			str_format(andg, sizeof(andg), "Your turret's damage is upgraded, now it is: %d", m_pPlayer->m_AccData.m_TurretDmg);
+			str_format(andg, sizeof(andg), "Ataque de torreta mejorado a %d", m_pPlayer->m_AccData.m_TurretDmg);
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), andg);
 			m_pPlayer->m_pAccount->Apply();
 			return;
 		}			
-		else if(!strcmp(supgr, "speed"))
+		else if(!strcmp(supgr, "velocidad"))
 		{
 			if(m_pPlayer->m_AccData.m_TurretSpeed >= 500)
-				return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Maximal turret speed level!");		
+				return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "¡Nivel máximo alcanzado!");		
 			if(m_pPlayer->m_AccData.m_TurretMoney <= 0)
-				return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "You have not turret money counts!");
+				return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "¡No tienes dinero de torreta!");
 			
 			m_pPlayer->m_AccData.m_TurretMoney--, m_pPlayer->m_AccData.m_TurretSpeed++;
-			str_format(andg, sizeof(andg), "Your turret's speed is upgraded, now it is: %d", m_pPlayer->m_AccData.m_TurretSpeed);
+			str_format(andg, sizeof(andg), "Velocidad de torreta mejorada a %d", m_pPlayer->m_AccData.m_TurretSpeed);
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), andg);
 			m_pPlayer->m_pAccount->Apply();
 			return;
@@ -241,38 +241,38 @@ void CCmd::ChatCmd(CNetMsg_Cl_Say *Msg)
 		else if (!strcmp(supgr, "ammo"))
 		{
 			if (m_pPlayer->m_AccData.m_TurretAmmo >= 100)
-				return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Maximal turret ammo level!");
+				return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "¡Nivel máximo alcanzado!");
 			if (m_pPlayer->m_AccData.m_TurretMoney <= 0)
-				return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "You have not turret money counts!");
+				return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "¡No tienes dinero de torreta!");
 
 			m_pPlayer->m_AccData.m_TurretMoney--, m_pPlayer->m_AccData.m_TurretAmmo++;
-			str_format(andg, sizeof(andg), "Your turret's gun is upgraded, now it is: %d", m_pPlayer->m_AccData.m_TurretAmmo);
+			str_format(andg, sizeof(andg), "Ammo de torreta mejorada a %d", m_pPlayer->m_AccData.m_TurretAmmo);
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), andg);
 			m_pPlayer->m_pAccount->Apply();
 			return;
 		}
-		else if (!strcmp(supgr, "ammoregen"))
+		else if (!strcmp(supgr, "regenammo"))
 		{
 			if (m_pPlayer->m_AccData.m_TurretShotgun >= 75)
-				return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Maximal turret ammoregen level!");
+				return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "¡Nivel máximo alcanzado!");
 			if (m_pPlayer->m_AccData.m_TurretMoney <= 0)
-				return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "You have not turret money counts!");
+				return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "¡No tienes dinero de torreta!");
 
 			m_pPlayer->m_AccData.m_TurretMoney--, m_pPlayer->m_AccData.m_TurretShotgun++;
-			str_format(andg, sizeof(andg), "Your turret's ammoregen is upgraded, now it is: %d", m_pPlayer->m_AccData.m_TurretShotgun);
+			str_format(andg, sizeof(andg), "RegenAmmo de torreta mejorada a %d", m_pPlayer->m_AccData.m_TurretShotgun);
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), andg);
 			m_pPlayer->m_pAccount->Apply();
 			return;
 		}
-		else if (!strcmp(supgr, "range"))
+		else if (!strcmp(supgr, "alcance"))
 		{
 			if (m_pPlayer->m_AccData.m_TurretRange >= 200)
-				return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Maximal turret range level!");
+				return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "¡Nivel máximo alcanzado!");
 			if (m_pPlayer->m_AccData.m_TurretMoney <= 0)
-				return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "You have not turret money counts!");
+				return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "¡No tienes dinero de torreta!");
 
 			m_pPlayer->m_AccData.m_TurretMoney--, m_pPlayer->m_AccData.m_TurretRange++;
-			str_format(andg, sizeof(andg), "Your turret's range is upgraded, now it is: %d", m_pPlayer->m_AccData.m_TurretRange);
+			str_format(andg, sizeof(andg), "Alcance de torreta mejorado a %d", m_pPlayer->m_AccData.m_TurretRange);
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), andg);
 			m_pPlayer->m_pAccount->Apply();
 			return;
@@ -280,29 +280,29 @@ void CCmd::ChatCmd(CNetMsg_Cl_Say *Msg)
 		else if (!strcmp(supgr, "stats"))
 		{
 			char aBuf[64];
-			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "---- Turret ----");
-			str_format(aBuf, sizeof(aBuf), "Lvl: %d", m_pPlayer->m_AccData.m_TurretLevel);
+			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "---- Torreta ----");
+			str_format(aBuf, sizeof(aBuf), "Nivel: %d", m_pPlayer->m_AccData.m_TurretLevel);
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), aBuf);
 			str_format(aBuf, sizeof(aBuf), "Exp: %d", m_pPlayer->m_AccData.m_TurretExp);
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), aBuf);
-			str_format(aBuf, sizeof(aBuf), "Money: %d", m_pPlayer->m_AccData.m_TurretMoney);
+			str_format(aBuf, sizeof(aBuf), "Dinero: %d", m_pPlayer->m_AccData.m_TurretMoney);
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), aBuf);
-			str_format(aBuf, sizeof(aBuf), "Speed: %d", m_pPlayer->m_AccData.m_TurretSpeed);
+			str_format(aBuf, sizeof(aBuf), "Velocidad: %d", m_pPlayer->m_AccData.m_TurretSpeed);
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), aBuf);
-			str_format(aBuf, sizeof(aBuf), "Damage: %d", m_pPlayer->m_AccData.m_TurretDmg);
+			str_format(aBuf, sizeof(aBuf), "Ataque: %d", m_pPlayer->m_AccData.m_TurretDmg);
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), aBuf);
 			str_format(aBuf, sizeof(aBuf), "Ammo: %d", m_pPlayer->m_AccData.m_TurretAmmo);
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), aBuf);
-			str_format(aBuf, sizeof(aBuf), "AmmoRegen: %d", m_pPlayer->m_AccData.m_TurretShotgun);
+			str_format(aBuf, sizeof(aBuf), "RegenAmmo: %d", m_pPlayer->m_AccData.m_TurretShotgun);
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), aBuf);
-			str_format(aBuf, sizeof(aBuf), "Range: %d", m_pPlayer->m_AccData.m_TurretRange);
+			str_format(aBuf, sizeof(aBuf), "Alcance: %d", m_pPlayer->m_AccData.m_TurretRange);
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), aBuf);
-			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "---- Turret ----");
+			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "---- Torreta ----");
 			return;
 		}
 		else
 		{
-			str_format(andg, sizeof(andg), "No such turret upgrade: '%s'!", supgr);
+			str_format(andg, sizeof(andg), "No existe la mejora '%s'!", supgr);
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), andg);
 			return;
 		}
@@ -310,26 +310,26 @@ void CCmd::ChatCmd(CNetMsg_Cl_Say *Msg)
 	else if (!str_comp_nocase(Msg->m_pMessage, "/me") || !str_comp_nocase(Msg->m_pMessage, "/status") || !str_comp_nocase(Msg->m_pMessage, "/stats"))
 	{
 		LastChat();
-		if (!m_pPlayer->m_AccData.m_UserID) return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "You are not logged in! Type '/account' for more information!");
+		if (!m_pPlayer->m_AccData.m_UserID) return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "No has iniciado sesión, escribe '/account' para más información");
 
 		char aBuf[64];
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "~~~~~~~~ ! Your account details ! ~~~~~~~~");
-		str_format(aBuf, sizeof(aBuf), "Login: %s", m_pPlayer->m_AccData.m_Username);
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "~~~~~~~~~~~~~~ Tu Cuenta ~~~~~~~~~~~~~~");
+		str_format(aBuf, sizeof(aBuf), "Usuario: %s", m_pPlayer->m_AccData.m_Username);
 		GameServer()->SendChatTarget(m_pPlayer->GetCID(), aBuf);
-		str_format(aBuf, sizeof(aBuf), "Password: %s", m_pPlayer->m_AccData.m_Password);
+		str_format(aBuf, sizeof(aBuf), "Contraseña: %s", m_pPlayer->m_AccData.m_Password);
 		GameServer()->SendChatTarget(m_pPlayer->GetCID(), aBuf);
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Mailbox: <no mailbox> (no active)");
-		str_format(aBuf, sizeof(aBuf), "Level: %d", m_pPlayer->m_AccData.m_Level);
+		//GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Mailbox: <no mailbox> (no active)");
+		str_format(aBuf, sizeof(aBuf), "Nivel: %d", m_pPlayer->m_AccData.m_Level);
 		GameServer()->SendChatTarget(m_pPlayer->GetCID(), aBuf);
 		str_format(aBuf, sizeof(aBuf), "Exp: %d/%d", m_pPlayer->m_AccData.m_Exp, m_pPlayer->m_AccData.m_Level);
 		GameServer()->SendChatTarget(m_pPlayer->GetCID(), aBuf);
-		str_format(aBuf, sizeof(aBuf), "Money: %d", m_pPlayer->m_AccData.m_Money);
+		str_format(aBuf, sizeof(aBuf), "Dinero: %d", m_pPlayer->m_AccData.m_Money);
 		GameServer()->SendChatTarget(m_pPlayer->GetCID(), aBuf);
-		str_format(aBuf, sizeof(aBuf), "Freeze: %s", m_pPlayer->m_AccData.m_Freeze ? "yes" : "no");
+		str_format(aBuf, sizeof(aBuf), "Congelado: %s", m_pPlayer->m_AccData.m_Freeze ? "si" : "no");
 		GameServer()->SendChatTarget(m_pPlayer->GetCID(), aBuf);
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "You can change your password with the command:");
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/password <new password>");
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "~~~~~~~~ ! Your account details ! ~~~~~~~~");
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Puedes cambiar tu contraseña con:");
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/password <nueva contraseña>");
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "~~~~~~~~~~~~~~ Tu Cuenta ~~~~~~~~~~~~~~");
 		return;
 	}
 	else if(!strncmp(Msg->m_pMessage, "/idlist", 7))
@@ -350,11 +350,11 @@ void CCmd::ChatCmd(CNetMsg_Cl_Say *Msg)
 	{
 		LastChat();
 		if (!m_pPlayer->m_AccData.m_UserID)
-			return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "You are not logged in! Type '/account' for more information!");
+			return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "No has iniciado sesión, escribe '/account' para más información");
 
 		char NewPassword[256];
 		if(sscanf(Msg->m_pMessage, "/password %s", NewPassword) != 1)
-			return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Use \"/password <new password>\"");
+			return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Haz \"/password <nueva contraseña>\"");
 
 		m_pPlayer->m_pAccount->NewPassword(NewPassword);
 		return;
@@ -399,49 +399,48 @@ void CCmd::ChatCmd(CNetMsg_Cl_Say *Msg)
 	else if (!strcmp(Msg->m_pMessage, "/info"))
 	{
 		LastChat();
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "~~~~~~~~ Welcome to info! ~~~~~~~~");
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "~~~~~~~~~~~~~~ Información ~~~~~~~~~~~~~~");
 		char aBuf[128];
-		str_format(aBuf, sizeof(aBuf), "Owner: %s / Skype: %s", g_Config.m_SvOwnerName, g_Config.m_SvOwnerSkype);
+		str_format(aBuf, sizeof(aBuf), "Dueño: OrchidAlloy (Discord: @OrchidAlloy#0001");
 		GameServer()->SendChatTarget(m_pPlayer->GetCID(), aBuf);
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Panic mod by Kurosio, helper: nope");
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "~~~~~~~~ Welcome to info! ~~~~~~~~");
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Panic mod by Kurosio");
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "~~~~~~~~~~~~~~ Información ~~~~~~~~~~~~~~");
 		return;
 	}
 	else if(!strcmp(Msg->m_pMessage, "/help"))
     {
 		LastChat();
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "~~~~~~~~ Welcome to help! ~~~~~~~~");
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/account - information & help account system");
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/news - for see what news in server");
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/rules - for read the rules Panic");
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/pm - send personal message to player");
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/cmdlist - commands server");
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/vip - get info vip status");
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/supervip - get info supervip status");
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/ultimatevip - get info ultimatevip status");
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/turret info - info about turrets");
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/levels - info about level");
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/shop - shop score tees");
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "~~~~~~~~ Welcome to help! ~~~~~~~~");
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "~~~~~~~~~~~~~~ Ayuda ~~~~~~~~~~~~~~");
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/account - Tu cuenta");
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/rules - Reglas del servidor");
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/pm - Enviar mensaje privado");
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/cmdlist - Todos los comandos");
+		//GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/vip - get info vip status");
+		//GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/supervip - get info supervip status");
+		//GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/ultimatevip - get info ultimatevip status");
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/turret info - Torretas");
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/levels - Niveles");
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/shop - Tienda");
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "~~~~~~~~~~~~~~ Ayuda ~~~~~~~~~~~~~~");
 		return;
     }
 	else if (!strcmp(Msg->m_pMessage, "/levels"))
 	{
 		LastChat();
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Since 40: your shotgun spread growing by 1 bullet per 10 levels");
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Since 50: +10 ammo");
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Since 100: +10 ammo");
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Nivel 40: Mejora de escopeta cada 10 niveles");
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Nivel 50: +10 ammo");
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Nivel 100: +10 ammo");
 		return;
 	}
 	else if (!strcmp(Msg->m_pMessage, "/account"))
 	{
 		LastChat();
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "--- Account ---");
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/register <name> <pass> - Register new account");
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/login <name> <pass> - Login to your account");
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "--- Cuenta ---");
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/register <nombre> <contraseña> - Registrarte");
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/login <nombre> <contraseña> - Iniciar sesión");
 		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/logout - Logout from your account");
 		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/password - Change account password");
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "--- Account ---");
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "--- Cuenta ---");
 		return;
 	}
 	else if (!strcmp(Msg->m_pMessage, "/shop"))
@@ -470,39 +469,34 @@ void CCmd::ChatCmd(CNetMsg_Cl_Say *Msg)
 	else if(!strcmp(Msg->m_pMessage, "/cmdlist"))
 	{
 		LastChat();
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "~~~~~~~~ Welcome to cmdlist! ~~~~~~~~");
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/register, /login, /logout - account system");
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/rules, /help, /info - information");
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/stats, /upgr - upgrade system");
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/shop - shop score tees");
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/idlist - List IDs players");	
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "~~~~~~~~~~~~~~ Comandos ~~~~~~~~~~~~~~");
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/register, /login, /logout - Tu cuenta");
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/rules, /help, /info - Información");
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/stats, /upgr - Mejoras");
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/shop - Tienda");
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/idlist - Lista de jugadores");	
 		if(m_pPlayer->m_AccData.m_PlayerState == 1)
 		{
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "#This command police group");
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "#/policehelp - help for police group");				
 		}
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "~~~~~~~~ Welcome to cmdlist! ~~~~~~~~");
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "~~~~~~~~~~~~~~ Comandos ~~~~~~~~~~~~~~");
 		return;
 	}	
 	else if(!strcmp(Msg->m_pMessage, "/rules"))
 	{
 		LastChat();
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "rule 1 nope can sell");
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "rule 2 dont farm (freeze acc)");
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "rule 3 dont insult (mute/ban 1-7 day)");
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "rule 4 dont share acc(only when agree)(freeze acc)");
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "rule 5 dont talk about other servers(ip ban)");
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "rule 6 dont use bots(perma ban)");
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "rule 7 dont teamkill (ban 1-7 day");
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "rule 8 dont sell accounts (perma ban)");
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "rule 9 no selfkill");
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "rule 10 everyone who use bugs (freeze + ban)");
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Regla 1 No spamear");
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Regla 2 No insultar");
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Regla 3 No matar a tu equipo");
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Regla 4 No usar bots");
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Regla 5 No buguear");
 		return;
 	}
 	else if (!strcmp(Msg->m_pMessage, "/heart"))
 	{
 		LastChat();
-		if (!m_pPlayer->m_AccData.m_UserID) return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "You are not logged in! Type '/account' for more information!");
+		if (!m_pPlayer->m_AccData.m_UserID) return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "No has iniciado sesión, haz '/account' para más información");
 		if (!GameServer()->GetPlayerChar(m_pPlayer->GetCID())) return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Use only if you alive!");
 		if (GameServer()->m_World.m_Paused) return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Please wait end round!");
 		if(m_pPlayer->GetTeam() != TEAM_RED) return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Available only zombies!");
@@ -518,7 +512,7 @@ void CCmd::ChatCmd(CNetMsg_Cl_Say *Msg)
 	else if (!strcmp(Msg->m_pMessage, "/jump"))
 	{
 		LastChat();
-		if (!m_pPlayer->m_AccData.m_UserID) return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "You are not logged in! Type '/account' for more information!");
+		if (!m_pPlayer->m_AccData.m_UserID) return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "No has iniciado sesión, haz '/account' para más información");
 		if (!GameServer()->GetPlayerChar(m_pPlayer->GetCID())) return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Use only if you alive!");
 		if (GameServer()->m_World.m_Paused) return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Please wait end round!");
 		if (m_pPlayer->m_Score < 3) return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Need 3 score!");
@@ -532,7 +526,7 @@ void CCmd::ChatCmd(CNetMsg_Cl_Say *Msg)
 	else if (!strcmp(Msg->m_pMessage, "/range"))
 	{
 		LastChat();
-		if (!m_pPlayer->m_AccData.m_UserID) return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "You are not logged in! Type '/account' for more information!");
+		if (!m_pPlayer->m_AccData.m_UserID) return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "No has iniciado sesión, haz '/account' para más información");
 
 		if (!GameServer()->GetPlayerChar(m_pPlayer->GetCID())) return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Use only if you alive!");
 		if (GameServer()->m_World.m_Paused) return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Please wait end round!");
@@ -674,7 +668,7 @@ void CCmd::ChatCmd(CNetMsg_Cl_Say *Msg)
 	if(!strncmp(Msg->m_pMessage, "/", 1))
 	{
 		LastChat();
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Wrong command. Use /cmdlist");
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Comando incorrecto. Haz /cmdlist");
 	}
 
 }
