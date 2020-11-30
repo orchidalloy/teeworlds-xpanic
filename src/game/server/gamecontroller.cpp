@@ -283,10 +283,10 @@ const char *IGameController::GetTeamName(int Team)
 {
 	if (IsTeamplay())
 	{
-		if (Team == TEAM_RED) return "equipo Zombie";
-		else if (Team == TEAM_BLUE) return "equipo Humano";
+		if (Team == TEAM_RED) return "a los Zombies";
+		else if (Team == TEAM_BLUE) return "a los Humanos";
 	}
-	return "los espectadores";
+	return "al modo espectador";
 }
 
 void IGameController::StartRound()

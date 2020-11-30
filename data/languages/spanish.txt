@@ -33,7 +33,7 @@
 == ¡%s gana!
 
 '%s' entered and joined the %s
-== '%s' entró y se unió a %s
+== '%s' entró y se unió %s
 
 '%s' has left the game
 == '%s' ha salido del juego
