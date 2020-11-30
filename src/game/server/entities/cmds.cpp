@@ -93,7 +93,7 @@ void CCmd::ChatCmd(CNetMsg_Cl_Say *Msg)
 		char supgr[256], andg[64];
 		if (sscanf(Msg->m_pMessage, "/upgr %s", supgr) != 1)
 		{
-			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/upgr <Tipo>"), GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Tipos: dmg (daño), hp (vida), control, ammo, ammoregen, stats");
+			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/upgr <Tipo>"), GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Tipos: dmg (daño), hp (vida), control, ammo (munición), ammoregen, stats");
 			return;
 		}
 		if (!strcmp(supgr, "control"))
@@ -143,7 +143,7 @@ void CCmd::ChatCmd(CNetMsg_Cl_Say *Msg)
 				return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "¡No tienes dinero!");
 
 			m_pPlayer->m_AccData.m_Money--, m_pPlayer->m_AccData.m_Ammoregen++;
-			str_format(andg, sizeof(andg), "Nuevo nivel de AmmoRegen: %d, Dinero: %d", m_pPlayer->m_AccData.m_Ammoregen, m_pPlayer->m_AccData.m_Money);
+			str_format(andg, sizeof(andg), "Nuevo nivel de Regen.Munición: %d, Dinero: %d", m_pPlayer->m_AccData.m_Ammoregen, m_pPlayer->m_AccData.m_Money);
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), andg);
 			m_pPlayer->m_pAccount->Apply();
 			return;
@@ -156,7 +156,7 @@ void CCmd::ChatCmd(CNetMsg_Cl_Say *Msg)
 				return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "¡No tienes 10 de dinero!");
 
 			m_pPlayer->m_AccData.m_Money -= 10, m_pPlayer->m_AccData.m_Ammo++;
-			str_format(andg, sizeof(andg), "Nuevo nivel de Ammo: %d, Dinero: %d", GameServer()->GetPlayerChar(m_pPlayer->GetCID())->m_mAmmo + m_pPlayer->m_AccData.m_Ammo, m_pPlayer->m_AccData.m_Money);
+			str_format(andg, sizeof(andg), "Nuevo nivel de Munición: %d, Dinero: %d", GameServer()->GetPlayerChar(m_pPlayer->GetCID())->m_mAmmo + m_pPlayer->m_AccData.m_Ammo, m_pPlayer->m_AccData.m_Money);
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), andg);
 			m_pPlayer->m_pAccount->Apply();
 			return;
@@ -171,9 +171,9 @@ void CCmd::ChatCmd(CNetMsg_Cl_Say *Msg)
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), aBuf2);
 			str_format(aBuf2, sizeof(aBuf2), "Control: %d", m_pPlayer->m_AccData.m_Handle);
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), aBuf2);
-			str_format(aBuf2, sizeof(aBuf2), "AmmoRegen: %d", m_pPlayer->m_AccData.m_Ammoregen);
+			str_format(aBuf2, sizeof(aBuf2), "Regen.Munición: %d", m_pPlayer->m_AccData.m_Ammoregen);
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), aBuf2);
-			str_format(aBuf2, sizeof(aBuf2), "Ammo: %d", m_pPlayer->m_AccData.m_Ammo);
+			str_format(aBuf2, sizeof(aBuf2), "Munición: %d", m_pPlayer->m_AccData.m_Ammo);
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), aBuf2);						
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Puedes comprar mejoras con:");
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/upgr info");
@@ -198,8 +198,8 @@ void CCmd::ChatCmd(CNetMsg_Cl_Say *Msg)
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/turret stats - Características");
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/turret speed - Mejorar velocidad (1 dinero)");
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/turret dmg - Mejorar ataque (1 dinero)");
-			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/turret ammo - Mejorar ammo (1 dinero)");
-			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/turret ammoregen - Mejorar ammo (1 dinero)");
+			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/turret ammo - Mejorar munición (1 dinero)");
+			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/turret ammoregen - Mejorar munición (1 dinero)");
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/turret range - Mejorar alcance (1 dinero)");
 			return;
 		}			
@@ -259,7 +259,7 @@ void CCmd::ChatCmd(CNetMsg_Cl_Say *Msg)
 				return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "¡No tienes dinero de torreta!");
 
 			m_pPlayer->m_AccData.m_TurretMoney--, m_pPlayer->m_AccData.m_TurretShotgun++;
-			str_format(andg, sizeof(andg), "AmmoRegen de torreta mejorada a %d", m_pPlayer->m_AccData.m_TurretShotgun);
+			str_format(andg, sizeof(andg), "Regen.Munición de torreta mejorada a %d", m_pPlayer->m_AccData.m_TurretShotgun);
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), andg);
 			m_pPlayer->m_pAccount->Apply();
 			return;
@@ -291,9 +291,9 @@ void CCmd::ChatCmd(CNetMsg_Cl_Say *Msg)
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), aBuf);
 			str_format(aBuf, sizeof(aBuf), "Daño: %d", m_pPlayer->m_AccData.m_TurretDmg);
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), aBuf);
-			str_format(aBuf, sizeof(aBuf), "Ammo: %d", m_pPlayer->m_AccData.m_TurretAmmo);
+			str_format(aBuf, sizeof(aBuf), "Munición: %d", m_pPlayer->m_AccData.m_TurretAmmo);
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), aBuf);
-			str_format(aBuf, sizeof(aBuf), "AmmoRegen: %d", m_pPlayer->m_AccData.m_TurretShotgun);
+			str_format(aBuf, sizeof(aBuf), "Regen.Munición: %d", m_pPlayer->m_AccData.m_TurretShotgun);
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), aBuf);
 			str_format(aBuf, sizeof(aBuf), "Alcance: %d", m_pPlayer->m_AccData.m_TurretRange);
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), aBuf);
@@ -488,9 +488,9 @@ void CCmd::ChatCmd(CNetMsg_Cl_Say *Msg)
 		LastChat();
 		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Regla 1 No spamear");
 		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Regla 2 No insultar");
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Regla 3 No matar a tu equipo");
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Regla 3 No trollear a tu equipo");
 		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Regla 4 No usar bots");
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Regla 5 No buguear");
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Regla 5 No abusar de bugs");
 		return;
 	}
 	else if (!strcmp(Msg->m_pMessage, "/heart"))
