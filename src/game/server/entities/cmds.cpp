@@ -417,7 +417,7 @@ void CCmd::ChatCmd(CNetMsg_Cl_Say *Msg)
 		//GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/vip - get info vip status");
 		//GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/supervip - get info supervip status");
 		//GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/ultimatevip - get info ultimatevip status");
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/stats - Tus características y mejoras"
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/stats - Tus características y mejoras");
 		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/turret - Torretas y sus mejoras");
 		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/shop - Tienda dentro del juego");
 		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/levels - Recompensas por niveles");
