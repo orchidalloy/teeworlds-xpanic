@@ -223,7 +223,7 @@ void IGameController::EndRound()
 						GameServer()->SendChatTarget(-1, "-------------------------------------");
 						str_format(aBuf, sizeof(aBuf), "Zombie: %s (Victoria)", Server()->ClientName(m_LastZomb));
 						GameServer()->SendChatTarget(-1, aBuf);
-						str_format(aBuf, sizeof(aBuf), "Victorias: %d / Pérdidas: %d (%.1f)", GameServer()->m_apPlayers[m_LastZomb]->m_AccData.m_Winner, GameServer()->m_apPlayers[m_LastZomb]->m_AccData.m_Luser, kofs);
+						str_format(aBuf, sizeof(aBuf), "Victorias: %d / Derrotas: %d (%.1f)", GameServer()->m_apPlayers[m_LastZomb]->m_AccData.m_Winner, GameServer()->m_apPlayers[m_LastZomb]->m_AccData.m_Luser, kofs);
 						GameServer()->SendChatTarget(-1, aBuf);
 						GameServer()->SendChatTarget(-1, "-------------------------------------");
 					}
@@ -251,9 +251,9 @@ void IGameController::EndRound()
 
 						char aBuf[64];
 						GameServer()->SendChatTarget(-1, "-------------------------------------");
-						str_format(aBuf, sizeof(aBuf), "Zombie: %s (Pérdida)", Server()->ClientName(m_LastZomb));
+						str_format(aBuf, sizeof(aBuf), "Zombie: %s (Derrota)", Server()->ClientName(m_LastZomb));
 						GameServer()->SendChatTarget(-1, aBuf);
-						str_format(aBuf, sizeof(aBuf), "Victorias: %d / Pérdidas: %d (%.1f)", GameServer()->m_apPlayers[m_LastZomb]->m_AccData.m_Winner, GameServer()->m_apPlayers[m_LastZomb]->m_AccData.m_Luser, kofs);
+						str_format(aBuf, sizeof(aBuf), "Victorias: %d / Derrotas: %d (%.1f)", GameServer()->m_apPlayers[m_LastZomb]->m_AccData.m_Winner, GameServer()->m_apPlayers[m_LastZomb]->m_AccData.m_Luser, kofs);
 						GameServer()->SendChatTarget(-1, aBuf);
 						GameServer()->SendChatTarget(-1, "-------------------------------------");
 					}
