@@ -93,7 +93,7 @@ void CCmd::ChatCmd(CNetMsg_Cl_Say *Msg)
 		char supgr[256], andg[64];
 		if (sscanf(Msg->m_pMessage, "/upgr %s", supgr) != 1)
 		{
-			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/upgr <Tipo>"), GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Tipos: ataque, vida, control, ammo, regenammo, stats");
+			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/upgr <Tipo>"), GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Tipos: dmg (daño), hp (vida), control, ammo, ammoregen, stats");
 			return;
 		}
 		if (!strcmp(supgr, "control"))
@@ -109,7 +109,7 @@ void CCmd::ChatCmd(CNetMsg_Cl_Say *Msg)
 			m_pPlayer->m_pAccount->Apply();
 			return;
 		}
-		else if (!strcmp(supgr, "ataque"))
+		else if (!strcmp(supgr, "dmg"))
 		{
 			if (m_pPlayer->m_AccData.m_Dmg >= 21)
 				return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "¡Nivel máximo alcanzado!");
@@ -117,12 +117,12 @@ void CCmd::ChatCmd(CNetMsg_Cl_Say *Msg)
 				return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "¡No tienes dinero!");
 
 			m_pPlayer->m_AccData.m_Money--, m_pPlayer->m_AccData.m_Dmg++;
-			str_format(andg, sizeof(andg), "Nuevo nivel de Ataque: %d, Dinero: %d", m_pPlayer->m_AccData.m_Dmg, m_pPlayer->m_AccData.m_Money);
+			str_format(andg, sizeof(andg), "Nuevo nivel de Daño: %d, Dinero: %d", m_pPlayer->m_AccData.m_Dmg, m_pPlayer->m_AccData.m_Money);
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), andg);
 			m_pPlayer->m_pAccount->Apply();
 			return;
 		}
-		else if (!strcmp(supgr, "vida"))
+		else if (!strcmp(supgr, "hp"))
 		{
 			if (m_pPlayer->m_AccData.m_Health >= 100)
 				return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "¡Nivel máximo alcanzado!");
@@ -135,7 +135,7 @@ void CCmd::ChatCmd(CNetMsg_Cl_Say *Msg)
 			m_pPlayer->m_pAccount->Apply();
 			return;
 		}
-		else if (!strcmp(supgr, "regenammo"))
+		else if (!strcmp(supgr, "ammoregen"))
 		{
 			if (m_pPlayer->m_AccData.m_Ammoregen >= 60)
 				return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "¡Nivel máximo alcanzado!");
@@ -143,7 +143,7 @@ void CCmd::ChatCmd(CNetMsg_Cl_Say *Msg)
 				return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "¡No tienes dinero!");
 
 			m_pPlayer->m_AccData.m_Money--, m_pPlayer->m_AccData.m_Ammoregen++;
-			str_format(andg, sizeof(andg), "Nuevo nivel de RegenAmmo: %d, Dinero: %d", m_pPlayer->m_AccData.m_Ammoregen, m_pPlayer->m_AccData.m_Money);
+			str_format(andg, sizeof(andg), "Nuevo nivel de AmmoRegen: %d, Dinero: %d", m_pPlayer->m_AccData.m_Ammoregen, m_pPlayer->m_AccData.m_Money);
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), andg);
 			m_pPlayer->m_pAccount->Apply();
 			return;
@@ -171,7 +171,7 @@ void CCmd::ChatCmd(CNetMsg_Cl_Say *Msg)
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), aBuf2);
 			str_format(aBuf2, sizeof(aBuf2), "Control: %d", m_pPlayer->m_AccData.m_Handle);
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), aBuf2);
-			str_format(aBuf2, sizeof(aBuf2), "RegenAmmo: %d", m_pPlayer->m_AccData.m_Ammoregen);
+			str_format(aBuf2, sizeof(aBuf2), "AmmoRegen: %d", m_pPlayer->m_AccData.m_Ammoregen);
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), aBuf2);
 			str_format(aBuf2, sizeof(aBuf2), "Ammo: %d", m_pPlayer->m_AccData.m_Ammo);
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), aBuf2);						
@@ -196,11 +196,11 @@ void CCmd::ChatCmd(CNetMsg_Cl_Say *Msg)
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/turret info - Información");
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/turret help - Ayuda");
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/turret stats - Características");
-			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/turret velocidad - Mejorar velocidad (1 dinero)");
-			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/turret ataque - Mejorar ataque (1 dinero)");
+			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/turret speed - Mejorar velocidad (1 dinero)");
+			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/turret dmg - Mejorar ataque (1 dinero)");
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/turret ammo - Mejorar ammo (1 dinero)");
-			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/turret regenammo - Mejorar ammo (1 dinero)");
-			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/turret alcance - Mejorar alcance (1 dinero)");
+			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/turret ammoregen - Mejorar ammo (1 dinero)");
+			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/turret range - Mejorar alcance (1 dinero)");
 			return;
 		}			
 		else if(!strcmp(supgr, "help"))
@@ -212,7 +212,7 @@ void CCmd::ChatCmd(CNetMsg_Cl_Say *Msg)
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Laser: Pone un laser cada 40 segundos");
 			return;
 		}
-		else if(!strcmp(supgr, "ataque"))
+		else if(!strcmp(supgr, "dmg"))
 		{
 			if(m_pPlayer->m_AccData.m_TurretDmg > 100)
 				return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "¡Nivel máximo alcanzado!");		
@@ -220,12 +220,12 @@ void CCmd::ChatCmd(CNetMsg_Cl_Say *Msg)
 				return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "¡No tienes dinero de torreta!");
 			
 			m_pPlayer->m_AccData.m_TurretMoney--, m_pPlayer->m_AccData.m_TurretDmg++;
-			str_format(andg, sizeof(andg), "Ataque de torreta mejorado a %d", m_pPlayer->m_AccData.m_TurretDmg);
+			str_format(andg, sizeof(andg), "Daño de torreta mejorado a %d", m_pPlayer->m_AccData.m_TurretDmg);
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), andg);
 			m_pPlayer->m_pAccount->Apply();
 			return;
 		}			
-		else if(!strcmp(supgr, "velocidad"))
+		else if(!strcmp(supgr, "speed"))
 		{
 			if(m_pPlayer->m_AccData.m_TurretSpeed >= 500)
 				return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "¡Nivel máximo alcanzado!");		
@@ -251,7 +251,7 @@ void CCmd::ChatCmd(CNetMsg_Cl_Say *Msg)
 			m_pPlayer->m_pAccount->Apply();
 			return;
 		}
-		else if (!strcmp(supgr, "regenammo"))
+		else if (!strcmp(supgr, "ammoregen"))
 		{
 			if (m_pPlayer->m_AccData.m_TurretShotgun >= 75)
 				return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "¡Nivel máximo alcanzado!");
@@ -259,12 +259,12 @@ void CCmd::ChatCmd(CNetMsg_Cl_Say *Msg)
 				return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "¡No tienes dinero de torreta!");
 
 			m_pPlayer->m_AccData.m_TurretMoney--, m_pPlayer->m_AccData.m_TurretShotgun++;
-			str_format(andg, sizeof(andg), "RegenAmmo de torreta mejorada a %d", m_pPlayer->m_AccData.m_TurretShotgun);
+			str_format(andg, sizeof(andg), "AmmoRegen de torreta mejorada a %d", m_pPlayer->m_AccData.m_TurretShotgun);
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), andg);
 			m_pPlayer->m_pAccount->Apply();
 			return;
 		}
-		else if (!strcmp(supgr, "alcance"))
+		else if (!strcmp(supgr, "range"))
 		{
 			if (m_pPlayer->m_AccData.m_TurretRange >= 200)
 				return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "¡Nivel máximo alcanzado!");
@@ -289,11 +289,11 @@ void CCmd::ChatCmd(CNetMsg_Cl_Say *Msg)
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), aBuf);
 			str_format(aBuf, sizeof(aBuf), "Velocidad: %d", m_pPlayer->m_AccData.m_TurretSpeed);
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), aBuf);
-			str_format(aBuf, sizeof(aBuf), "Ataque: %d", m_pPlayer->m_AccData.m_TurretDmg);
+			str_format(aBuf, sizeof(aBuf), "Daño: %d", m_pPlayer->m_AccData.m_TurretDmg);
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), aBuf);
 			str_format(aBuf, sizeof(aBuf), "Ammo: %d", m_pPlayer->m_AccData.m_TurretAmmo);
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), aBuf);
-			str_format(aBuf, sizeof(aBuf), "RegenAmmo: %d", m_pPlayer->m_AccData.m_TurretShotgun);
+			str_format(aBuf, sizeof(aBuf), "AmmoRegen: %d", m_pPlayer->m_AccData.m_TurretShotgun);
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), aBuf);
 			str_format(aBuf, sizeof(aBuf), "Alcance: %d", m_pPlayer->m_AccData.m_TurretRange);
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), aBuf);
