@@ -733,7 +733,7 @@ void CGameContext::OnClientEnter(int ClientID)
 		SendVoteSet(ClientID);
 
 	char Name[96];
-	str_format(Name, sizeof(Name), "'%s', Bienvenido  a %s", Server()->ClientName(ClientID), g_Config.m_SvGametype);
+	str_format(Name, sizeof(Name), "'%s', Bienvenido  a %s!", Server()->ClientName(ClientID), g_Config.m_SvGametype);
 	SendChatTarget(ClientID, Name);
 	SendChatTarget(ClientID, "Haz '/cmdlist' para ver la lista de comandos");
 	str_format(Name, sizeof(Name), "Haz '/news' para ver las novedades de %s", g_Config.m_SvGametype);

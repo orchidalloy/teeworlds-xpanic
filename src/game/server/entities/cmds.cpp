@@ -331,7 +331,7 @@ void CCmd::ChatCmd(CNetMsg_Cl_Say *Msg)
 	}
 	else if(!strncmp(Msg->m_pMessage, "/idlist", 7))
 	{
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "--- List IDs ---");
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "--- Lista de IDs ---");
 		for(int i = 0; i < MAX_CLIENTS; i++)
 		{
 			if(GameServer()->m_apPlayers[i])
