@@ -188,12 +188,9 @@ void CCmd::ChatCmd(CNetMsg_Cl_Say *Msg)
 		if(!m_pPlayer->m_AccData.m_UserID) return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "No has iniciado sesión, haz '/account' para más información");
 
 		char supgr[256], andg[64];
-		if (sscanf(Msg->m_pMessage, "/turret %s", supgr) != 1)
-			return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Haz /turret info");
-
-		if(!strcmp(supgr, "info"))
+		if(sscanf(Msg->m_pMessage, "/turret %s", supgr) != 1 || !strcmp(supgr, "info"))
 		{		
-			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/turret info - Información");
+			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/turret info - Comandos");
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/turret help - Ayuda");
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/turret stats - Características");
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/turret speed - Mejorar velocidad (1 dinero)");
@@ -400,9 +397,10 @@ void CCmd::ChatCmd(CNetMsg_Cl_Say *Msg)
 	{
 		LastChat();
 		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "~~~~~~~~~~~~~~ Información ~~~~~~~~~~~~~~");
-		char aBuf[128];
-		str_format(aBuf, sizeof(aBuf), "Dueño: OrchidAlloy (Discord: @OrchidAlloy#0001");
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), aBuf);
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Este es un minijuego en que puedes ser parte de dos equipos: Humanos y Zombies.");
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Los humanos deben usar torretas para sobrevivir y los zombies deben matar a los humanos o usar su corazón para infectarlos.");
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Haz /help para mas información");
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Dueño: OrchidAlloy (Discord: @OrchidAlloy#0001");
 		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Panic mod by Kurosio");
 		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "~~~~~~~~~~~~~~ Información ~~~~~~~~~~~~~~");
 		return;
@@ -410,18 +408,20 @@ void CCmd::ChatCmd(CNetMsg_Cl_Say *Msg)
 	else if(!strcmp(Msg->m_pMessage, "/help"))
     {
 		LastChat();
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "~~~~~~~~~~~~~~ Ayuda ~~~~~~~~~~~~~~");
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "~~~~~~~~~~~~~~~~ Ayuda ~~~~~~~~~~~~~~~~");
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/info - Información del juego");
 		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/account - Tu cuenta");
 		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/rules - Reglas del servidor");
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/pm - Enviar mensaje privado");
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/cmdlist - Todos los comandos");
+		//GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/pm - Enviar mensaje privado");
+		//GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/cmdlist - Todos los comandos");
 		//GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/vip - get info vip status");
 		//GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/supervip - get info supervip status");
 		//GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/ultimatevip - get info ultimatevip status");
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/turret info - Torretas");
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/levels - Niveles");
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/shop - Tienda");
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "~~~~~~~~~~~~~~ Ayuda ~~~~~~~~~~~~~~");
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/stats - Tus características y mejoras"
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/turret - Torretas y sus mejoras");
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/shop - Tienda dentro del juego");
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/levels - Recompensas por niveles");
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "~~~~~~~~~~~~~~~~ Ayuda ~~~~~~~~~~~~~~~~");
 		return;
     }
 	else if (!strcmp(Msg->m_pMessage, "/levels"))
@@ -472,8 +472,8 @@ void CCmd::ChatCmd(CNetMsg_Cl_Say *Msg)
 		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "~~~~~~~~~~~~~~ Comandos ~~~~~~~~~~~~~~");
 		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/register, /login, /logout - Tu cuenta");
 		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/rules, /help, /info - Información");
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/stats, /upgr - Mejoras");
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/shop - Tienda");
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/stats, /upgr, /shop - Mejoras");
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/pm - Mensaje privado");
 		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/idlist - Lista de jugadores");	
 		if(m_pPlayer->m_AccData.m_PlayerState == 1)
 		{
