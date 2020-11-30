@@ -100,14 +100,14 @@ void CAccount::Login(char *Username, char *Password)
 			m_pPlayer->SetTeam(TEAM_BLUE);
 	}
 
-	GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Logeado exitosamente! Diviértete jugando!");
+	GameServer()->SendChatTarget(m_pPlayer->GetCID(), "¡Has iniciado sesión! ¡Diviértete jugando!");
 }
 
 void CAccount::Register(char *Username, char *Password)
 {
 	char aBuf[125];
 	if(m_pPlayer->m_AccData.m_UserID)
-		return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Ya estas logeado");
+		return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Ya iniciaste sesión");
 	
 	if(Exists(Username))
 		return GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Esa cuenta ya existe.");
