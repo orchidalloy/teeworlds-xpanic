@@ -206,7 +206,7 @@ void CCmd::ChatCmd(CNetMsg_Cl_Say *Msg)
 		else if(!strcmp(supgr, "help"))
 		{
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "La Torreta se pone con el emote de Fantasma");
-			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "La Torreta puede tener 3 tipos de arma");
+			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Hay varios tipos de torreta;");
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Pistola: 1 disparo por segundo");
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Escopeta: 1 disparo cada 3 segundos");
 			GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Laser: Pone un laser cada 40 segundos");
@@ -359,7 +359,7 @@ void CCmd::ChatCmd(CNetMsg_Cl_Say *Msg)
 		m_pPlayer->m_pAccount->NewPassword(NewPassword);
 		return;
 	}
-	else if (!strcmp(Msg->m_pMessage, "/vip"))
+	/*else if (!strcmp(Msg->m_pMessage, "/vip"))
 	{
 		LastChat();
 		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "--- ViP ---");
@@ -395,7 +395,7 @@ void CCmd::ChatCmd(CNetMsg_Cl_Say *Msg)
 		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Payments: Name, name");
 		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Skype: nope, Name: nope");
 		return;
-	}
+	}*/
 	else if (!strcmp(Msg->m_pMessage, "/info"))
 	{
 		LastChat();
@@ -452,12 +452,12 @@ void CCmd::ChatCmd(CNetMsg_Cl_Say *Msg)
 		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "/jump [3 score] - Salto adicional");
 		return;
 	}
-	else if (!strcmp(Msg->m_pMessage, "/news"))
+	/*else if (!strcmp(Msg->m_pMessage, "/news"))
 	{
 		LastChat();
 		GameServer()->SendChatTarget(m_pPlayer->GetCID(), "Added basic ranked system");
 		return;
-	}
+	}*/
 	else if (!strcmp(Msg->m_pMessage, "/policehelp"))
 	{
 		LastChat();
